@@ -1,0 +1,72 @@
+﻿@model  PagedList.IPagedList<SaleShop.EF.User>
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using PagedList.Mvc
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-table"></i>
+        Data Table Example
+        <span>@Html.ActionLink("Redirect to Create User", "Create", "User")</span>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_length" id="dataTable_length">
+                            <div class="col-sm-12 col-md-6"><div id="dataTable_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable"></label></div></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+
+                                    <tfoot>
+                                        <tr>
+                                            <th rowspan="1" colspan="1">ID</th>
+                                            <th rowspan="1" colspan="1">Name</th>
+                                            <th rowspan="1" colspan="1">Email</th>
+                                            <th rowspan="1" colspan="1">Address</th>
+                                            <th rowspan="1" colspan="1">Phone</th>
+                                            <th rowspan="1" colspan="1">Status</th>
+
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                        <tr role="row" class="even">
+                                            <td class="sorting_1">@item.ID</td>
+                                            <td class="sorting_1">@item.UserName</td>
+                                            <td class="sorting_1">@item.Email</td>
+                                            <td class="sorting_1">@item.Address</td>
+                                            <td class="sorting_1">@item.Phone</td>
+                                            <td class="sorting_1">@item.Status</td>
+                                            <td ><a href="../User/Edit/@item.ID">Edit</a>|<a href="../User/Remove/@item.ID">Remove</a></td>
+
+                                        </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <template class="alert alert-info">
+                                                Do not have any records
+                                            </template>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated yesterday at @DateTime.Now.Hour:@DateTime.Now.Minute </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page })) 
+</div>
